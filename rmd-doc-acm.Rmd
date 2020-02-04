@@ -1,0 +1,76 @@
+---
+title: "R Markdown Class Exercise Take 2"
+author:
+    name: "Zack Garcia"
+    email: "garciz@uw.edu"
+    affiliation: "University of Washington"
+abstract:
+  This is a class exercise to show off various R markdown features. 
+bibliography: mybib.bib
+date: "2/3/2020"
+output: html_document
+---
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  collapse=TRUE,
+  warning=FALSE,
+  echo=FALSE
+)
+```
+
+```{r, starwars-plot, fig.cap = "A plot of starwars humans"}
+library(tidyverse)
+starwars %>%
+  filter(species=="Human") %>%
+  ggplot() + aes(x = height, y = mass) + geom_point()
+```
+
+We can see in Figure \@ref(fig:starwars-plot) some humans.
+
+```{r starwars-tbl}
+starwars %>%
+  filter(species == "Human") %>%
+  select(name, height, mass, homeworld) %>%
+  knitr::kable(caption = "A knitr kable table of starwars data")
+```
+
+We can see in Table \@ref(tab:starwars-tbl) some humans again and their details. 
+
+[@fuchs2006ethical] is a sample citation. 
+
+[@mcgill2017ecosystem] is a second citation for a paper published by my girlfriend while at UW. 
+
+Below we run code from an external R script to compute the value of 3 squared. 
+```{r readcode, eval=FALSE}
+knitr::read_chunk('external-test.r')
+```
+
+```{r}
+#Function to compute a large sum
+inefficient_triangle_number <- function(x){
+  sum = 0
+  y = c(1:x)
+  for (i in y){
+    sum = sum + i
+  }
+  return(sum)
+}
+```
+
+Cached answer:
+```{r LongCode, cache=TRUE}
+testno = 10000
+answer <- inefficient_triangle_number(testno)
+print(answer)
+```
+
+Cached double the answer:
+```{r dependson="LongCode", cache=TRUE}
+doubleanswer = answer*2
+print(doubleanswer)
+```
+
+# References
+
+
